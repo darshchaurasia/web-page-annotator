@@ -71,7 +71,9 @@ window.addEventListener('load', () => {
       highlights.forEach(html => {
         let tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
-        document.body.appendChild(tempDiv.firstChild);
+        while (tempDiv.firstChild) {
+          document.body.appendChild(tempDiv.firstChild);
+        }
       });
     }
     if (result.notes) {
@@ -80,7 +82,7 @@ window.addEventListener('load', () => {
         let noteElement = document.createElement('div');
         noteElement.textContent = note.note;
         noteElement.style.position = 'absolute';
-        noteElement.style.top = `${note.position + 10}px`;
+        noteElement.style.top = `${note.position}px`;
         noteElement.style.left = '10px';
         noteElement.style.backgroundColor = 'lightyellow';
         noteElement.style.color = 'black';  // Ensure text color is black

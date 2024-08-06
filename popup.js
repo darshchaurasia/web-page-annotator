@@ -2,7 +2,7 @@ document.getElementById('highlightBtn').addEventListener('click', () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
-        function: highlightText
+        func: highlightText
       });
     });
   });
@@ -11,7 +11,7 @@ document.getElementById('highlightBtn').addEventListener('click', () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
-        function: addNote
+        func: addNote
       });
     });
   });
@@ -20,7 +20,7 @@ document.getElementById('highlightBtn').addEventListener('click', () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
-        function: saveHighlightsAndNotes
+        func: saveHighlightsAndNotes
       });
     });
   });
@@ -29,7 +29,7 @@ document.getElementById('highlightBtn').addEventListener('click', () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
-        function: clearHighlightsAndNotes
+        func: clearHighlightsAndNotes
       });
     });
   });
@@ -62,21 +62,28 @@ document.getElementById('highlightBtn').addEventListener('click', () => {
       noteElement.className = 'note';
       document.body.appendChild(noteElement);
   
+      let notes = JSON.parse(localStorage.getItem('notes') || '[]');
       notes.push({ note: note, position: window.scrollY });
+      localStorage.setItem('notes', JSON.stringify(notes));
     }
   }
   
   function saveHighlightsAndNotes() {
+    let highlights = Array.from(document.querySelectorAll('.highlighted')).map(el => el.outerHTML);
+    let notes = Array.from(document.querySelectorAll('.note')).map(el => ({
+      note: el.textContent,
+      position: parseInt(el.style.top, 10)
+    }));
+  
     chrome.storage.local.set({ highlights: highlights, notes: notes }, () => {
       alert('Highlights and notes saved!');
     });
   }
   
   function clearHighlightsAndNotes() {
-    highlights = [];
-    notes = [];
-    document.querySelectorAll('.highlighted').forEach(el => el.style.backgroundColor = '');
+    document.querySelectorAll('.highlighted').forEach(el => el.replaceWith(el.textContent));
     document.querySelectorAll('.note').forEach(el => el.remove());
+  
     chrome.storage.local.clear(() => {
       alert('All highlights and notes cleared!');
     });
