@@ -48,7 +48,9 @@
       menu.style.overflowY = 'auto';
       menu.innerHTML = `
         <h3>Annotator</h3>
-        <button id="highlightBtn">Highlight Text</button>
+        <button id="highlightBtnYellow">Highlight Yellow</button>
+        <button id="highlightBtnGreen">Highlight Green</button>
+        <button id="highlightBtnPink">Highlight Pink</button>
         <button id="addNoteBtn">Add Note</button>
         <button id="clearHighlightsBtn">Clear Highlights</button>
         <h4>Notes</h4>
@@ -56,7 +58,9 @@
       `;
       document.body.appendChild(menu);
   
-      document.getElementById('highlightBtn').addEventListener('click', highlightText);
+      document.getElementById('highlightBtnYellow').addEventListener('click', () => highlightText('yellow'));
+      document.getElementById('highlightBtnGreen').addEventListener('click', () => highlightText('lightgreen'));
+      document.getElementById('highlightBtnPink').addEventListener('click', () => highlightText('pink'));
       document.getElementById('addNoteBtn').addEventListener('click', addNote);
       document.getElementById('clearHighlightsBtn').addEventListener('click', clearHighlights);
     }
@@ -70,25 +74,32 @@
       }
     }
   
-    function highlightText() {
-      let selection = window.getSelection();
-      if (selection.rangeCount > 0) {
-        for (let i = 0; i < selection.rangeCount; i++) {
-          let range = selection.getRangeAt(i);
+    function highlightText(color) {
+      try {
+        let selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          let range = selection.getRangeAt(0);
           if (range && !selection.isCollapsed) {
             let span = document.createElement('span');
             span.className = 'highlighted';
-            span.style.backgroundColor = 'yellow';
+            span.style.backgroundColor = color;
   
             try {
               range.surroundContents(span);
               highlights.push(getXPath(span));
+              saveHighlightsToLocal();
             } catch (e) {
               alert('Cannot highlight partially selected elements. Please select only text.');
             }
+          } else {
+            alert('No text selected. Please select text to highlight.');
           }
+        } else {
+          alert('No text selected. Please select text to highlight.');
         }
-        saveHighlightsToLocal();
+      } catch (error) {
+        console.error('Error highlighting text:', error);
+        alert('An error occurred while highlighting text.');
       }
     }
   

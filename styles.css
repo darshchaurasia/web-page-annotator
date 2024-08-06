@@ -82,22 +82,13 @@
   }
   
   .delete-note-btn {
-    background-color: #dc3545;
-    color: white;
+    background-color: transparent;
+    color: #dc3545;
     border: none;
-    border-radius: 50%;
-    padding: 5px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-  }
-  
-  .delete-note-btn:hover {
-    background-color: #c82333;
-  }
-  
-  .delete-note-btn:active {
-    background-color: #bd2130;
+    font-size: 16px;
+    padding: 0;
+    margin-left: 10px;
   }
   
   .highlighted {
