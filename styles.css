@@ -1,0 +1,13 @@
+.highlighted {
+    background-color: yellow;
+  }
+  
+.note {
+    background-color: lightyellow;
+    color: black;  /* Ensure text color is black */
+    padding: 5px;
+    border: 1px solid black;
+    position: absolute;
+  }
+  
+  /* Darsh Chaurasia */

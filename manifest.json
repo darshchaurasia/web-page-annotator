@@ -3,7 +3,7 @@
     "name": "Web Page Annotator",
     "version": "1.0",
     "description": "Allow users to highlight text and add notes to any webpage.",
-    "permissions": ["storage", "activeTab"],
+    "permissions": ["storage", "activeTab", "scripting"],
     "background": {
       "service_worker": "background.js"
     },
