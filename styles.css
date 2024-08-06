@@ -1,49 +1,106 @@
 #floatingIcon {
     position: fixed;
-    left: 0;
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
     padding: 10px;
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    border-radius: 10px;
+    border-radius: 50%;
     z-index: 10000;
     font-size: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   #annotationMenu {
     position: fixed;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100%;
+    left: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: auto;
+    max-height: 80vh;
     padding: 20px;
     box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 9999;
     display: none;
+    overflow-y: auto;
+  }
+  
+  #annotationMenu h3 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  #annotationMenu h4 {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  #annotationMenu button {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  #annotationMenu button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  #annotationMenu button:active {
+    background-color: #004085;
+    transform: translateY(0);
   }
   
   .note-item {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .delete-note-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .delete-note-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .delete-note-btn:active {
+    background-color: #bd2130;
   }
   
   .highlighted {
     background-color: yellow;
-  }
-  
-  .note {
-    background-color: lightyellow;
-    color: black;  /* Ensure text color is black */
-    padding: 5px;
-    border: 1px solid black;
-    position: absolute;
   }
   
