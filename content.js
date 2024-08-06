@@ -52,7 +52,8 @@
         <button id="highlightBtnGreen">Highlight Green</button>
         <button id="highlightBtnPink">Highlight Pink</button>
         <button id="addNoteBtn">Add Note</button>
-        <button id="clearHighlightsBtn">Clear Highlights</button>
+        <button id="removeSelectedHighlightsBtn">Remove Selected Highlights</button>
+        <button id="clearAllHighlightsBtn">Clear All Highlights</button>
         <h4>Notes</h4>
         <div id="notesList"></div>
       `;
@@ -62,7 +63,8 @@
       document.getElementById('highlightBtnGreen').addEventListener('click', () => highlightText('lightgreen'));
       document.getElementById('highlightBtnPink').addEventListener('click', () => highlightText('pink'));
       document.getElementById('addNoteBtn').addEventListener('click', addNote);
-      document.getElementById('clearHighlightsBtn').addEventListener('click', clearHighlights);
+      document.getElementById('removeSelectedHighlightsBtn').addEventListener('click', removeSelectedHighlights);
+      document.getElementById('clearAllHighlightsBtn').addEventListener('click', clearAllHighlights);
     }
   
     function toggleMenu() {
@@ -118,7 +120,34 @@
       saveNotesToLocal();
     }
   
-    function clearHighlights() {
+    function removeSelectedHighlights() {
+      try {
+        let selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          let range = selection.getRangeAt(0);
+          if (range && !selection.isCollapsed) {
+            const span = document.createElement('span');
+            range.surroundContents(span);
+            const highlightedElements = span.querySelectorAll('.highlighted');
+            highlightedElements.forEach(element => {
+              const parent = element.parentNode;
+              while (element.firstChild) parent.insertBefore(element.firstChild, element);
+              parent.removeChild(element);
+            });
+            saveHighlightsToLocal();
+          } else {
+            alert('No text selected. Please select highlighted text to remove.');
+          }
+        } else {
+          alert('No text selected. Please select highlighted text to remove.');
+        }
+      } catch (error) {
+        console.error('Error removing highlights:', error);
+        alert('An error occurred while removing highlights.');
+      }
+    }
+  
+    function clearAllHighlights() {
       highlights = [];
       document.querySelectorAll('.highlighted').forEach(el => el.replaceWith(el.textContent));
       saveHighlightsToLocal();
